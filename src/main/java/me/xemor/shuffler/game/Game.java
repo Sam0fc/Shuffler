@@ -71,6 +71,10 @@ public class Game {
         return instance;
     }
 
+    public void addPlayerToBossBar(Player player) {
+        bossBar.addPlayer(player);
+    }
+
     public boolean isGameStarted() {
         return gameStarted;
     }
@@ -151,14 +155,14 @@ public class Game {
         Location origin = sumLocation.multiply(1D / players.size());
         List<@NotNull Chunk> chunks = new ArrayList<>(Arrays.stream(world.getLoadedChunks())
                 // Manhattan Distance is less than 25 chunk coordinates away from origin
-                .filter(chunk -> Math.abs(chunk.getX() - origin.getChunk().getX()) + Math.abs(chunk.getZ() - origin.getChunk().getZ()) <= 25)
+                .filter(chunk -> Math.abs(chunk.getX() - origin.getChunk().getX()) + Math.abs(chunk.getZ() - origin.getChunk().getZ()) <= 50)
                 .toList()
         );
         Collections.shuffle(chunks);
 
         List<@NotNull Chunk> nChunks = chunks.stream()
                 .filter((chunk -> {
-                    Block highestBlockAt = chunk.getWorld().getHighestBlockAt(chunk.getX() + 8, chunk.getZ() + 8);
+                    Block highestBlockAt = chunk.getWorld().getHighestBlockAt(chunk.getX() * 16 + 8, chunk.getZ() * 16 + 8);
                     Biome biome = highestBlockAt.getBiome();
                     return !biome.getKey().getKey().contains("ocean");
                 }))
@@ -188,7 +192,7 @@ public class Game {
                 Player player = playerIterator.next();
                 int x1 = ThreadLocalRandom.current().nextInt(16);
                 int z1 = ThreadLocalRandom.current().nextInt(16);
-                Location locationWithoutY = new Location(world, chunkToSpawnAt.getX() * 16 + x1, 0, chunkToSpawnAt.getZ() + z1);
+                Location locationWithoutY = new Location(world, chunkToSpawnAt.getX() * 16 + x1, 0, chunkToSpawnAt.getZ() * 16 + z1);
                 int highestBlockYAt = world.getHighestBlockYAt(locationWithoutY);
                 locationWithoutY.setY(highestBlockYAt + 2);
                 Location location = locationWithoutY;
@@ -282,6 +286,12 @@ public class Game {
                 Player player = Bukkit.getPlayer(alivePlayer);
                 if (player == null) continue;
                 player.showTitle(title);
+                player.sendMessage(Component.text("Find any of: ").append(
+                        allMaterialsToSearchFor.stream()
+                                .map((it) -> Component.text().append(SearchingForFormatter.getFriendlyName(it)))
+                                .reduce((a, b) -> a.append(Component.text(" ")).append(b))
+                                .orElse(Component.text())
+                ));
             }
         } else {
             level++;
@@ -482,7 +492,7 @@ public class Game {
     }
 
     private int getMaximumTimeAllotted() {
-        return 180 + Math.min(120, (level - 1) * 60);
+        return 240 + Math.min(60, (level - 1) * 60);
     }
 
     public boolean isPlayerAlive(Player player) {

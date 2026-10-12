@@ -34,6 +34,8 @@ public class AutostartListener implements Listener {
         if (playerCount >= autostart.minPlayers()) {
             startOrUpdateCountdown(playerCount, autostart);
         }
+
+        game.addPlayerToBossBar(event.getPlayer());
     }
 
     @EventHandler

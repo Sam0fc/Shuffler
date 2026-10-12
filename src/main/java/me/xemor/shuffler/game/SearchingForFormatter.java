@@ -37,7 +37,7 @@ public class SearchingForFormatter {
         return builder.build();
     }
 
-    private static Component getFriendlyName(Material material) {
+    public static Component getFriendlyName(Material material) {
         return Component.translatable(material.translationKey());
     }
 }

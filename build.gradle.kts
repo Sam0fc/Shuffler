@@ -4,7 +4,7 @@ import java.lang.reflect.Modifier
 import java.net.URLClassLoader
 
 group = "me.xemor"
-version = "1.5"
+version = "1.6"
 description = "shuffler"
 java.sourceCompatibility = JavaVersion.VERSION_25
 java.targetCompatibility = JavaVersion.VERSION_25

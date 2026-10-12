@@ -13,3 +13,5 @@ automating:
   commandsPerPlayerOnStart: []
 game:
   world: "world"
+  # How crafting difficulty is derived from gatherable items: max_entropy (default), ghosh, leontief or loopy_belief
+  craftingModel: "max_entropy"
