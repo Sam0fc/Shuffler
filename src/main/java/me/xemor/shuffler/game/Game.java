@@ -384,7 +384,7 @@ public class Game {
         ProbabilityBag bag = itemGenerator.getBagForPlayers(
                 alivePlayers.stream().map(Bukkit::getPlayer).filter(Objects::nonNull).toList()
         );
-        double weightingCap = Math.pow(1 / 3D, level - 1);
+        double weightingCap = Math.pow(1 / 4D, level - 1);
 
         boolean hasError;
         List<ProbabilityBag.SampleResult> samples = Collections.emptyList();
