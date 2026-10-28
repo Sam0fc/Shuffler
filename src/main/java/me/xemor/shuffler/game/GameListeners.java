@@ -19,7 +19,6 @@ public class GameListeners implements Listener {
         this.game = game;
     }
 
-    // Custom tab names reset when a player reconnects, so put theirs back.
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         if (game.isGameStarted()) {

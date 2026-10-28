@@ -470,7 +470,6 @@ public class Game {
         }
     }
 
-    // Returns whichever of the materials the player is standing on, standing in or holding, or null if none.
     private @Nullable Material findFoundItem(Player player, Set<Material> materials) {
         Stream<Material> blocks = Stream.of(
                 player.getLocation().subtract(0, 1, 0).getBlock().getType(),
@@ -515,7 +514,6 @@ public class Game {
         Bukkit.getOnlinePlayers().forEach(this::updateTabName);
     }
 
-    // Alive players show their found item's icon in the tab list, or a question mark while still searching.
     public void updateTabName(Player player) {
         if (!alivePlayers.contains(player.getUniqueId())) {
             player.playerListName(null);
