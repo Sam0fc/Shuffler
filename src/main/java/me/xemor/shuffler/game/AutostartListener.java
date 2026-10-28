@@ -23,6 +23,11 @@ public class AutostartListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        if (game.isGameStarted()) {
+            game.updateTabName(event.getPlayer());
+            game.addPlayerToBossBar(event.getPlayer());
+        }
+
         AutostartYaml autostart = Shuffler.getInstance().getConfigYaml().automating().autostart();
 
         if (!autostart.enabled()) {
@@ -35,7 +40,7 @@ public class AutostartListener implements Listener {
             startOrUpdateCountdown(playerCount, autostart);
         }
 
-        game.addPlayerToBossBar(event.getPlayer());
+
     }
 
     @EventHandler
