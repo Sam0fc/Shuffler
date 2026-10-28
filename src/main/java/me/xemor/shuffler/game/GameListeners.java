@@ -6,6 +6,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -16,6 +17,14 @@ public class GameListeners implements Listener {
 
     public GameListeners(Game game) {
         this.game = game;
+    }
+
+    // Custom tab names reset when a player reconnects, so put theirs back.
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        if (game.isGameStarted()) {
+            game.updateTabName(e.getPlayer());
+        }
     }
 
     @EventHandler
